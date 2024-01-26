@@ -1,4 +1,4 @@
-# PalWorld Manager
+# PalWorld Management
 
 As of right now, this is just a hodgepodge monorepo of tools I'm using to manage my PalWorld server, and are mostly suited to my needs/not generalized.
 
