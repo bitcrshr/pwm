@@ -1,5 +1,5 @@
 # Makefile to compile proto files with service/version path preservation,
-# and initialize Go modules for each service/version
+# and initialize Go modules for each service/version, and generate TypeScript libraries
 
 # Variables
 ROOT_DIR := ./src
@@ -31,7 +31,7 @@ $(error "protoc-gen-ts not installed. Please run `bun i -g ts-proto`")
 endif
 
 # .PHONY to declare non-file targets
-.PHONY: all compile_protos clean go_mod_init
+.PHONY: all compile_protos clean
 
 # Default target
 all: compile_protos
@@ -41,23 +41,25 @@ compile_protos:
 	@for dir in $(PROTO_DIRS); do \
 		relative_dir=$${dir#$(ROOT_DIR)/}; \
 		go_out_dir=$(GO_OUT_DIR)/$${relative_dir}; \
-		echo "Compiling proto files in $$dir to $$go_out_dir..."; \
-		mkdir -p $$go_out_dir; \
+		ts_out_dir=$(TS_OUT_DIR)/$$relative_dir; \
+		echo "Compiling proto files in $$dir to $$go_out_dir and $$ts_out_dir..."; \
+		mkdir -p $$go_out_dir $$ts_out_dir; \
 		protoc --proto_path=$$dir \
 			--go_out=$$go_out_dir \
 			--go_opt=paths=source_relative \
 			--go-grpc_out=$$go_out_dir \
 			--go-grpc_opt=paths=source_relative \
+			--ts_out=$$ts_out_dir \
 			$$dir/*.proto; \
 		if [ $$? -ne 0 ]; then \
 			echo "Error compiling protos in $$dir" && exit 1; \
 		fi; \
-		service_version=$$(echo $$relative_dir | tr '/' '_'); \
-		go_mod_path="$(GO_MOD_BASE_NAME)/$$service_version"; \
-		echo "Initializing Go module $$go_mod_path in $$go_out_dir"; \
-		(cd $$go_out_dir && go mod init $$go_mod_path && go mod tidy) || exit 1; \
+		if [ ! -f "$$go_out_dir/go.mod" ]; then \
+			echo "Initializing Go module in $$go_out_dir"; \
+			(cd $$go_out_dir && go mod init $(GO_MOD_BASE_NAME)/$$relative_dir && go mod tidy) || exit 1; \
+		fi; \
 	done
-	@echo "Compiled all proto files successfully and initialized Go modules!"
+	@echo "Compiled all proto files successfully, initialized Go modules, and generated TypeScript libraries!"
 
 # Clean compiled proto files
 clean:
