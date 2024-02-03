@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package config.v1;
+option go_package = "github.com/pwm/protos/compiled/go/config/v1;config_v1";
+
+import "settings.proto";
+
+service ConfigService {
+    rpc GetPalWorldSettings(GetPalWorldSettingsRequest) returns (GetPalWorldSettingsResponse);
+    rpc UpdatePalWorldSettings(UpdatePalWorldSettingsRequest) returns (UpdatePalWorldSettingsResponse);
+    rpc ResetPalWorldSettings(ResetPalWorldSettingsRequest) returns (ResetPalWorldSettingsResponse);
+}

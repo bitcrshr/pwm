@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package config.v1;
+option go_package = "github.com/pwm/protos/compiled/go/config/v1;config_v1";
+
+
+message PalWorldSettings {
+    string difficulty = 1;
+    float day_time_speed_rate = 2;
+    float night_time_speed_rate = 3;
+    float exp_rate = 4;
+    float pal_capture_rate = 5;
+    float pal_spawn_num_rate = 6;
+    float pal_damage_rate_attack = 7;
+    float pal_damage_rate_defense = 8;
+    float player_damage_rate_attack = 9;
+    float player_damage_rate_defense = 10;
+    float player_stomach_decrease_rate = 11;
+    float player_stamina_decrease_rate = 12;
+    float player_auto_hp_regen_rate = 13;
+    float player_auto_hp_regen_rate_in_sleep = 14;
+    float pal_stomach_decrease_rate = 15;
+    float pal_stamina_decrease_rate = 16;
+    float pal_auto_hp_regen_rate = 17;
+    float pal_auto_hp_regen_rate_in_sleep = 18;
+    float build_object_damage_rate = 19;
+    float build_object_deterioration_damage_rate = 20;
+    float collection_drop_rate = 21;
+    float collection_object_hp_rate = 22;
+    float collection_object_respawn_speed_rate = 23;
+    float enemy_drop_item_rate = 24;
+    string death_penalty = 25;
+    bool b_enable_player_to_player_damage = 26;
+    bool b_enable_friendly_fire = 27;
+    bool b_enable_invader_enemy = 28;
+    bool b_active_unko = 29;
+    bool b_enable_aim_assist_pad = 30;
+    bool b_enable_aim_assist_keyboard = 31;
+    int32 drop_item_max_num = 32;
+    int32 drop_item_max_num_unko = 33;
+    int32 base_camp_max_num = 34;
+    int32 base_camp_worker_max_num = 35;
+    float drop_item_alive_max_hours = 36;
+    bool b_auto_reset_guild_no_online_players = 37;
+    float auto_reset_guild_time_no_online_players = 38;
+    int32 guild_player_max_num = 39;
+    float pal_egg_default_hatching_time = 40;
+    float work_speed_rate = 41;
+    bool b_is_multiplay = 42;
+    bool b_is_pvp = 43;
+    bool b_can_pickup_other_guild_death_penalty_drop = 44;
+    bool b_enable_non_login_penalty = 45;
+    bool b_enable_fast_travel = 46;
+    bool b_is_start_location_select_by_map = 47;
+    bool b_exist_player_after_logout = 48;
+    bool b_enable_defense_other_guild_player = 49;
+    int32 coop_player_max_num = 50;
+    int32 server_player_max_num = 51;
+    string server_name = 52;
+    string server_description = 53;
+    string admin_password = 54;
+    string server_password = 55;
+    int32 public_port = 56;
+    string public_ip = 57;
+    bool rcon_enabled = 58;
+    int32 rcon_port = 59;
+    string region = 60;
+    bool b_use_auth = 61;
+    string ban_list_url = 62;
+}
+
+message GetPalWorldSettingsRequest {}
+message GetPalWorldSettingsResponse {
+    PalWorldSettings settings = 1;
+}
+
+message UpdatePalWorldSettingsRequest {
+    PalWorldSettings settings = 1;
+    repeated string update_paths = 2;
+}
+message UpdatePalWorldSettingsResponse {
+    PalWorldSettings settings = 1;
+}
+
+message ResetPalWorldSettingsRequest {}
+message ResetPalWorldSettingsResponse {
+    PalWorldSettings settings = 1;
+}
