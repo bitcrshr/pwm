@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option go_package = "github.com/pwm/protos/compiled/go/admin/v1beta1;admin_v1beta1";
+
+message User {
+    string id = 1;
+    string name = 2;
+    string game_id = 3;
+    string steam_id = 4;
+
+    uint64 last_seen_at = 5;
+    uint64 first_seen_at = 6;
+}
+
+message GetOnlineUsersRequest {}
+message GetOnlineUsersResponse {
+    repeated User users = 1;
+}
+
+message GetOneUserRequest {
+    string id = 1;
+}
+message GetOneUserResponse {
+    optional User user = 1;
+}

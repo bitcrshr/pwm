@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "settings.proto";
+import "social.proto";
+
+package admin.v1beta1;
+option go_package = "github.com/pwm/protos/compiled/go/admin/v1beta1;admin_v1beta1";
+
+
+service AdminService {
+    // config
+    rpc GetPalWorldSettings(GetPalWorldSettingsRequest) returns (GetPalWorldSettingsResponse);
+    rpc UpdatePalWorldSettings(UpdatePalWorldSettingsRequest) returns (UpdatePalWorldSettingsResponse);
+    rpc ResetPalWorldSettings(ResetPalWorldSettingsRequest) returns (ResetPalWorldSettingsResponse);
+
+    // social
+    rpc GetOnlineUsers(GetOnlineUsersRequest) returns (GetOnlineUsersResponse);
+    rpc GetOneUser(GetOneUserRequest) returns (GetOneUserResponse);
+}
